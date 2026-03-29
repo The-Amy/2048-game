@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2048</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>2048</h1>
+    <div class="scores">
+      <div class="score-box">
+        <label>Score</label>
+        <span id="score">0</span>
+      </div>
+      <div class="score-box">
+        <label>Best</label>
+        <span id="best">0</span>
+      </div>
+    </div>
+  </header>
+
+  <p class="subtitle">Join the tiles, reach <strong>2048</strong>.</p>
+
+  <div class="grid-wrapper">
+    <div class="grid" id="grid"></div>
+    <div class="tiles-layer" id="tiles"></div>
+    <div class="overlay" id="overlay">
+      <div class="overlay-title" id="overlay-title">Game Over</div>
+      <div class="overlay-sub" id="overlay-sub">No moves left.</div>
+      <button onclick="restartGame()">Try Again</button>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="restartGame()">↺ New Game</button>
+    <button onclick="undoMove()">↩ Undo</button>
+  </div>
+
+  <p class="hint">Use arrow keys · swipe on mobile</p>
+
+  <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+:root {
+  --bg: #0f0f0f;
+  --grid-bg: #1a1a1a;
+  --cell-empty: #222222;
+  --accent: #f5c542;
+  --text-light: #f0ece0;
+  --text-dark: #1a1201;
+  --radius: 10px;
+  --gap: 12px;
+  --cell-size: 100px;
+
+  --c2:    #2d2d2d; --t2:    #f0ece0;
+  --c4:    #3a3010; --t4:    #f5c542;
+  --c8:    #7a3a00; --t8:    #ffffff;
+  --c16:   #a04500; --t16:   #ffffff;
+  --c32:   #c43200; --t32:   #ffffff;
+  --c64:   #e02000; --t64:   #ffffff;
+  --c128:  #c8a000; --t128:  #1a1201;
+  --c256:  #e0b800; --t256:  #1a1201;
+  --c512:  #f5c542; --t512:  #1a1201;
+  --c1024: #ffe080; --t1024: #1a1201;
+  --c2048: #ffffff; --t2048: #1a1201;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-light);
+  font-family: 'Space Mono', monospace;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  user-select: none;
+}
+
+/* ---- Header ---- */
+header {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -2px;
+  line-height: 1;
+}
+
+/* ---- Score boxes ---- */
+.scores {
+  display: flex;
+  gap: 10px;
+}
+
+.score-box {
+  background: var(--grid-bg);
+  border: 1px solid #333;
+  border-radius: var(--radius);
+  padding: 8px 16px;
+  text-align: center;
+  min-width: 80px;
+}
+
+.score-box label {
+  display: block;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.score-box span {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ---- Subtitle ---- */
+.subtitle {
+  max-width: 460px;
+  width: 100%;
+  font-size: 0.75rem;
+  color: #555;
+  margin-bottom: 16px;
+  letter-spacing: 0.5px;
+}
+
+.subtitle strong {
+  color: var(--accent);
+}
+
+/* ---- Grid ---- */
+.grid-wrapper {
+  position: relative;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, var(--cell-size));
+  grid-template-rows: repeat(4, var(--cell-size));
+  gap: var(--gap);
+  background: var(--grid-bg);
+  border: 1px solid #2a2a2a;
+  border-radius: 14px;
+  padding: var(--gap);
+  position: relative;
+}
+
+.cell-bg {
+  background: var(--cell-empty);
+  border-radius: var(--radius);
+  width: var(--cell-size);
+  height: var(--cell-size);
+}
+
+/* ---- Tiles layer ---- */
+.tiles-layer {
+  position: absolute;
+  top: var(--gap);
+  left: var(--gap);
+  pointer-events: none;
+}
+
+.tile {
+  position: absolute;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  transition: top 0.12s ease, left 0.12s ease;
+  will-change: top, left;
+  z-index: 2;
+}
+
+.tile.new {
+  animation: pop-in 0.18s ease forwards;
+}
+
+.tile.merged {
+  animation: merge-pop 0.18s ease forwards;
+  z-index: 3;
+}
+
+@keyframes pop-in {
+  0%   { transform: scale(0.5); opacity: 0; }
+  80%  { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes merge-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+/* ---- Tile colors ---- */
+.tile[data-val="2"]    { background: var(--c2);    color: var(--t2);    font-size: 2rem; }
+.tile[data-val="4"]    { background: var(--c4);    color: var(--t4);    font-size: 2rem; }
+.tile[data-val="8"]    { background: var(--c8);    color: var(--t8);    font-size: 2rem; }
+.tile[data-val="16"]   { background: var(--c16);   color: var(--t16);   font-size: 1.8rem; }
+.tile[data-val="32"]   { background: var(--c32);   color: var(--t32);   font-size: 1.8rem; }
+.tile[data-val="64"]   { background: var(--c64);   color: var(--t64);   font-size: 1.8rem; }
+.tile[data-val="128"]  { background: var(--c128);  color: var(--t128);  font-size: 1.5rem; }
+.tile[data-val="256"]  { background: var(--c256);  color: var(--t256);  font-size: 1.5rem; }
+.tile[data-val="512"]  { background: var(--c512);  color: var(--t512);  font-size: 1.5rem; }
+.tile[data-val="1024"] { background: var(--c1024); color: var(--t1024); font-size: 1.1rem; }
+.tile[data-val="2048"] { background: var(--c2048); color: var(--t2048); font-size: 1.1rem;
+                         box-shadow: 0 0 30px rgba(255,255,200,0.6); }
+
+/* ---- Controls ---- */
+.controls {
+  max-width: 460px;
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+button {
+  flex: 1;
+  background: var(--grid-bg);
+  border: 1px solid #333;
+  color: var(--text-light);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  padding: 12px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+button:hover {
+  background: var(--accent);
+  color: var(--text-dark);
+  border-color: var(--accent);
+}
+
+/* ---- Hint ---- */
+.hint {
+  max-width: 460px;
+  width: 100%;
+  font-size: 0.65rem;
+  color: #444;
+  margin-top: 12px;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+/* ---- Overlay (win / game over) ---- */
+.overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(15,15,15,0.88);
+  border-radius: 14px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  z-index: 10;
+}
+
+.overlay.show {
+  display: flex;
+}
+
+.overlay-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.overlay-sub {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.overlay button {
+  max-width: 160px;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 500px) {
+  :root {
+    --cell-size: 72px;
+    --gap: 8px;
+  }
+
+  h1 { font-size: 2.2rem; }
+  .tile[data-val="1024"] { font-size: 0.85rem; }
+  .tile[data-val="2048"] { font-size: 0.85rem; }
+}
